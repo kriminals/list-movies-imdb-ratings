@@ -25,7 +25,8 @@ function SearchComponent() {
         );
         const firstResult = result.data.Search[0].imdbID;
         console.log(firstResult);
-        setImdbId(imdbId.push(firstResult));
+        setImdbId(imdbId => [...imdbId, firstResult]);
+        //setImdbId(imdbId.push(firstResult));
         console.log(imdbId);
       };
       fetchImdbID();
@@ -42,11 +43,11 @@ function SearchComponent() {
         <input type="submit" value="Search" />
       </form>
       
+      {isPressed ? (<MovieList imdbId={imdbId} />) : (<p>waiting...</p>)}
       
     </div>
   );
 }
-// {isPressed ? (<MovieList imdbId={imdbId} />) : (<p>waiting...</p>)}
 
 
 export default SearchComponent;
