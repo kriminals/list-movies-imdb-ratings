@@ -3,6 +3,7 @@ import MovieList from './MovieList';
 import axios from 'axios';
 
 function SearchComponent() {
+  const API_KEY = process.env.REACT_APP_API_KEY;
   const [moviesToSearch, setMoviesToSearch] = useState([]);
   const [imdbId, setImdbId] = useState([]);
   const [value, setValue] = useState('');
@@ -12,24 +13,26 @@ function SearchComponent() {
     setValue(event.target.value);
   };
   const onSubmit = (event) => {
-    setMoviesToSearch(value.split('\n'));
     event.preventDefault();
+    setMoviesToSearch(value.split('\n'));
     setPressed(true);
   };
 
   useEffect(() => {
     moviesToSearch.forEach((movie) => {
+      let didCancel = false;
       const fetchImdbID = async () => {
         const result = await axios(
-          `http://www.omdbapi.com/?s=${movie}&apikey=3dc3957f`
+          `http://www.omdbapi.com/?s=${movie}&apikey=${API_KEY}`
         );
         const firstResult = result.data.Search[0].imdbID;
-        console.log(firstResult);
-        setImdbId(imdbId => [...imdbId, firstResult]);
+        // console.log(firstResult);
+        if (!didCancel) {setImdbId(imdbId => [...imdbId, firstResult]);}
         //setImdbId(imdbId.push(firstResult));
-        console.log(imdbId);
+        // console.log(imdbId);
       };
       fetchImdbID();
+      return () => {didCancel = true}
     });
   }, [moviesToSearch]);
 

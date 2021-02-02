@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 function MovieList(props) {
-
+    const API_KEY = process.env.REACT_APP_API_KEY;
     const [movieData, setMovieData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
@@ -10,7 +10,7 @@ function MovieList(props) {
       props.imdbId.forEach((id) => {
         const fetchImdbRating = async () => {
           const result = await axios(
-            `http://www.omdbapi.com/?i=${id}&apikey=3dc3957f`
+            `http://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`
           );
           if (!didCancel) {setMovieData(movieData => [...movieData, result.data]);}
           
