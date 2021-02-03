@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Imdb Movie Ratings",
+  "name": "Imdb Movie Ratings",
   "icons": [
     {
       "src": "favicon.ico",
