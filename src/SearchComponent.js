@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MovieList from './MovieList';
 import axios from 'axios';
+import { Input, Button } from 'antd';
 
 function SearchComponent() {
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -8,7 +9,9 @@ function SearchComponent() {
   const [imdbId, setImdbId] = useState([]);
   const [value, setValue] = useState('');
   const [isPressed, setPressed] = useState(false);
-  
+
+  const { TextArea } = Input;
+
   const onChange = (event) => {
     setValue(event.target.value);
   };
@@ -16,6 +19,11 @@ function SearchComponent() {
     event.preventDefault();
     setMoviesToSearch(value.split('\n'));
     setPressed(true);
+  };
+  const onReset = () => {
+    setValue('');
+    setPressed(false);
+    setImdbId([]);
   };
 
   useEffect(() => {
@@ -26,31 +34,34 @@ function SearchComponent() {
           `https://www.omdbapi.com/?s=${movie}&apikey=${API_KEY}`
         );
         const firstResult = result.data.Search[0].imdbID;
-        // console.log(firstResult);
-        if (!didCancel) {setImdbId(imdbId => [...imdbId, firstResult]);}
-        //setImdbId(imdbId.push(firstResult));
-        // console.log(imdbId);
+        if (!didCancel) {
+          setImdbId((imdbId) => [...imdbId, firstResult]);
+        }
       };
       fetchImdbID();
-      return () => {didCancel = true}
+      return () => {
+        didCancel = true;
+      };
     });
   }, [moviesToSearch]);
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <label>
-          Movies:
-          <textarea value={value} onChange={onChange} />
-        </label>
-        <input type="submit" value="Search" />
-      </form>
-      
-      {isPressed ? (<MovieList imdbId={imdbId} />) : (<p>waiting...</p>)}
-      
+      <TextArea
+        placeholder="copy here your movies one per line"
+        rows={4}
+        value={value}
+        onChange={onChange}
+      />
+      <Button type="primary" htmlType="submit" onClick={onSubmit}>
+        Submit
+      </Button>
+      <Button htmlType="button" onClick={onReset}>
+        Reset
+      </Button>
+      {isPressed ? <MovieList imdbId={imdbId} /> : <p></p>}
     </div>
   );
 }
-
 
 export default SearchComponent;
