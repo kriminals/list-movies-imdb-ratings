@@ -1,13 +1,23 @@
 //import Movies from './Movies';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SearchComponent from './SearchComponent';
+import {Layout} from 'antd';
 import './App.css';
 
 function App() {
+  const {Header, Content} = Layout;
   return (
-   <div>
-     <SearchComponent /> 
-    </div>
+   <>
+     <Layout>
+
+     <Header>
+       <h1>Fetch Imdb Ratings of Movies</h1>
+     </Header>
+     <Content>
+      <SearchComponent /> 
+     </Content>
+     </Layout>
+    </>
   );
 }
 
