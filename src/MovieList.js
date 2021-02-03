@@ -10,7 +10,7 @@ function MovieList(props) {
       props.imdbId.forEach((id) => {
         const fetchImdbRating = async () => {
           const result = await axios(
-            `http://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`
+            `https://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`
           );
           if (!didCancel) {setMovieData(movieData => [...movieData, result.data]);}
           
