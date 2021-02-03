@@ -23,7 +23,7 @@ function SearchComponent() {
       let didCancel = false;
       const fetchImdbID = async () => {
         const result = await axios(
-          `http://www.omdbapi.com/?s=${movie}&apikey=${API_KEY}`
+          `https://www.omdbapi.com/?s=${movie}&apikey=${API_KEY}`
         );
         const firstResult = result.data.Search[0].imdbID;
         // console.log(firstResult);
