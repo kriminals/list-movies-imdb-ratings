@@ -17,7 +17,10 @@ function SearchComponent() {
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    setMoviesToSearch(value.split('\n'));
+    // Remove blank lines
+    const regex = /^\s*[\r\n]/gm;
+    const textAreaMovies = value.replace(regex,'');
+    setMoviesToSearch(textAreaMovies.split('\n'));
     setPressed(true);
   };
   const onReset = () => {
